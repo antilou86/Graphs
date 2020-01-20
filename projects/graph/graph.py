@@ -29,24 +29,34 @@ class Graph:
         """
         if self.vertices.get(vertex_id) == None:
             raise IndexError(f"{vertex_id} is not in the graph, mah dood.")
-        return self.vertices[vertex_id].values()
+        return self.vertices[vertex_id]
 
     def bft(self, starting_vertex):
         """
         Print each vertex in breadth-first order
         beginning from starting_vertex.
         """
+        #instantiate queue and define starting vertex. 
         q = Queue()
         q.enqueue(starting_vertex)
-        visited = [starting_vertex]
+        #create a way to track visted vertices.
+        visited = []
+        #print initial node
+        print(f"{starting_vertex}")
+
         while q.size() > 0:
-            current_node = q.dequeue
+            #pop current node off the queue and add it to visited
+            current_node = q.dequeue()
             visited.append(current_node)
-            for i in self.vertices[current_node]:
+            #check the node for neighbors.
+            for i in self.get_neighbors(current_node):
+                #if neighbors were visited skip it.
+                #if they werent, add to the queue and to visited.
                 if not i in visited:
-                    q.enqueue(i)
-                    visited.append(i)
-            print(f"{i}")
+                    if i is not None:
+                        q.enqueue(i)
+                        visited.append(i)
+                        print(f"{i}")
 
     def dft(self, starting_vertex):
         """
