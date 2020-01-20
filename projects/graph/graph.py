@@ -13,14 +13,15 @@ class Graph:
         """
         Add a vertex to the graph.
         """
-        self.vertices[vertex_id] = {}
+        self.vertices[vertex_id] = set()
 
     def add_edge(self, v1, v2):
         """
         Add a directed edge to the graph.
         """
-        self.vertices[v1] = self.vertices[v1].copy() + v2
-
+        if self.vertices.get(v1) == None:
+            raise IndexError(f"{v1} is not in the graph, bruh. try running add_vertex({v1} first.) ")
+        self.vertices[v1].add(v2)
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
