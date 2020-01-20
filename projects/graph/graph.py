@@ -22,11 +22,14 @@ class Graph:
         if self.vertices.get(v1) == None:
             raise IndexError(f"{v1} is not in the graph, bruh. try running add_vertex({v1} first.) ")
         self.vertices[v1].add(v2)
+
     def get_neighbors(self, vertex_id):
         """
         Get all neighbors (edges) of a vertex.
         """
-        pass  # TODO
+        if self.vertices.get(vertex_id) == None:
+            raise IndexError(f"{vertex_id} is not in the graph, mah dood.")
+        return self.vertices[vertex_id].values()
 
     def bft(self, starting_vertex):
         """
