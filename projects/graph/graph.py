@@ -48,9 +48,6 @@ class Graph:
                     visited.append(i)
             print(f"{i}")
 
-
-
-
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
