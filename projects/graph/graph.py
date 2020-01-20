@@ -42,6 +42,7 @@ class Graph:
         #create a way to track visted vertices.
         visited = []
         #print initial node
+        print(f"BFT")
         print(f"{starting_vertex}")
 
         while q.size() > 0:
@@ -56,23 +57,57 @@ class Graph:
                     if i is not None:
                         q.enqueue(i)
                         visited.append(i)
-                        print(f"{i}")
+                    print(f"{i}")
 
     def dft(self, starting_vertex):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        pass  # TODO
+        #instantiate stack and define starting vertex. 
+        st = Stack()
+        st.push(starting_vertex)
+        #create a way to track visted vertices.
+        visited = []
+        #print initial node
+        print(f"DFT")
 
-    def dft_recursive(self, starting_vertex):
+        while st.size() > 0:
+            #pop current node off the stack and add it to visited
+            current_node = st.pop()
+            visited.append(current_node)
+            #check the node for neighbors.
+            for i in self.get_neighbors(current_node):
+                #if neighbors were visited skip it.
+                #if they werent, add to the stack and to visited.
+                if not i in visited:
+                    st.push(i)
+                    visited.append(i)
+            print(f"{current_node}")
+
+    def dft_recursive(self, starting_vertex, visited=None):
         """
         Print each vertex in depth-first order
         beginning from starting_vertex.
 
         This should be done using recursion.
         """
-        pass  # TODO
+        #when we reach the end, return
+        if not starting_vertex:
+            return
+        #first pass? if so, instantiate the list, and print title
+        if not visited:
+            visited=[starting_vertex]
+            print('Recursive DFT')
+        #if not, add node to visited 
+        else:
+            visited.append(starting_vertex)
+        #print node
+        print(starting_vertex)
+        #if passed in node's neighbors are not in visited, call recursive DFT
+        for i in self.vertices.get(starting_vertex):
+            if not i in visited:
+                self.dft_recursive(i, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
