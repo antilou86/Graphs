@@ -216,7 +216,7 @@ class Graph:
             for i in self.get_neighbors(starting_vertex):
                 if i in visited:
                     pass
-                else:
+                else:  
                     self.dfs_recursive(i, destination_vertex, visited)
             
 
