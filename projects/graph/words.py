@@ -1,5 +1,6 @@
 from graph import Graph
 import sys
+
 #define words
 start_word = 'hit'
 end_word = 'cog'
