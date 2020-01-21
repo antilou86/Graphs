@@ -19,7 +19,7 @@ class Graph:
         """
         Add a directed edge to the graph.
         """
-        if self.vertices.get(v1) == None:
+        if self.vertices.get(v1) == None or self.vertices.get(v2) == None:
             raise IndexError(f"{v1} is not in the graph, bruh. try running add_vertex({v1} first.) ")
         self.vertices[v1].add(v2)
 
@@ -190,7 +190,7 @@ class Graph:
                     if not current_path.get(i):
                         current_path[i] = current_node
 
-    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=None):
         """
         Return a list containing a path from
         starting_vertex to destination_vertex in
@@ -198,27 +198,22 @@ class Graph:
 
         This should be done using recursion.
         """
-        if starting_vertex == destination_vertex:
-            visited.append(starting_vertex)
-            print(f'{visited}')
-            return
+        if visited is None:
+            visited = set()
+        if path is None:
+            path = []
+        visited.add(starting_vertex)
+        path = path + [starting_vertex]
         
-        elif not visited:
-            visited=[starting_vertex]
-            print('Recursive DFS')
-            for i in self.get_neighbors(starting_vertex):
-                if i in visited:
-                    pass
-                else:
-                    self.dfs_recursive(i, destination_vertex, visited)
-        else:
-            visited.append(starting_vertex)        
-            for i in self.get_neighbors(starting_vertex):
-                if i in visited:
-                    pass
-                else:  
-                    self.dfs_recursive(i, destination_vertex, visited)
-            
+        if starting_vertex == destination_vertex:
+            return path
+        
+        for child_vert in self.vertices[starting_vertex]:
+            if child_vert not in visited:
+                new_path = self.dfs_recursive(child_vert, destination_vertex, visited, path)
+                if new_path:
+                    return new_path
+        return None
 
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
