@@ -46,25 +46,33 @@ class SocialGraph:
         self.friendships = {}
         # !!!! IMPLEMENT ME
         while self.last_id <= num_users:
-        # Add users
-            self.add_user(self.last_id + 1)
+        # Add users, user name will essentially be the user_id
+            self.add_user(self.last_id)
         # Create friendships
-        
         #for each user
         for user in self.users:
             #empty list to track potential friends
             possible_friends = []
+            
             #loop through all users
             for person in self.users:
                 #if its a duplicate, or the user we're evaluating, skip
-                if user.name != person.name and person.name not in possible_friends: 
-                    possible_friends.append(user)
-                #fisher-yates shuffle - to randomize the list
-                for i in range(len(possible_friends)):
-                    random_index = random.randint(i, len(possible_friends) - 1)
-                    possible_friends[random_index], possible_friends[i] = possible_friends[i], possible_friends[random_index]                    
-                #
+                if person is not user:
+                    if person not in possible_friends: 
+                        possible_friends.append(person)
+            #fisher-yates shuffle - to randomize the list
+            for i in range(len(possible_friends)):
+                random_index = random.randint(i, len(possible_friends) - 1)
+                possible_friends[random_index], possible_friends[i] = possible_friends[i], possible_friends[random_index]
 
+            #slice the first N (or "avg_friendships") bits off the list
+            friends_to_add = possible_friends[:avg_friendships]
+            print(friends_to_add)
+            #add random number of friends from the resulting array.
+            for item in friends_to_add:
+                if user < item:
+                    self.add_friendship(user, item)
+                
     def get_all_social_paths(self, user_id):
         """
         Takes a user's user_id as an argument
