@@ -1,3 +1,5 @@
+import random
+
 class User:
     def __init__(self, name):
         self.name = name
@@ -43,10 +45,25 @@ class SocialGraph:
         self.users = {}
         self.friendships = {}
         # !!!! IMPLEMENT ME
-
+        while self.last_id <= num_users:
         # Add users
-
+            self.add_user(self.last_id + 1)
         # Create friendships
+        
+        #for each user
+        for user in self.users:
+            #empty list to track potential friends
+            possible_friends = []
+            #loop through all users
+            for person in self.users:
+                #if its a duplicate, or the user we're evaluating, skip
+                if user.name != person.name and person.name not in possible_friends: 
+                    possible_friends.append(user)
+                #fisher-yates shuffle - to randomize the list
+                for i in range(len(possible_friends)):
+                    random_index = random.randint(i, len(possible_friends) - 1)
+                    possible_friends[random_index], possible_friends[i] = possible_friends[i], possible_friends[random_index]                    
+                #
 
     def get_all_social_paths(self, user_id):
         """
