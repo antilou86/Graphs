@@ -1,4 +1,5 @@
 import random
+from util import Queue
 
 class User:
     def __init__(self, name):
@@ -67,9 +68,9 @@ class SocialGraph:
 
             #slice the first N (or "avg_friendships") bits off the list
             friends_to_add = possible_friends[:avg_friendships]
-            print(friends_to_add)
             #add random number of friends from the resulting array.
             for item in friends_to_add:
+                #avoids double adding, since it is a bi-directional relationship.
                 if user < item:
                     self.add_friendship(user, item)
                 
@@ -84,6 +85,22 @@ class SocialGraph:
         """
         visited = {}  # Note that this is a dictionary, not a set
         # !!!! IMPLEMENT ME
+        qu = Queue()
+        qu.enqueue(user_id)
+        visited[user_id] = set([user_id])
+
+        while qu.size() > 0:
+            current_user = qu.dequeue()
+            visited[current_user].add(current_user)
+
+            for i in self.friendships[current_user]:
+                if not i in visited:
+                    if i is not None:
+                        visited[i]=visited.get(current_user).copy()#copy of the current_user array
+                        visited[i].add(current_user)
+                        visited[i].add(i)
+                        qu.enqueue(i)
+                        
         return visited
 
 
