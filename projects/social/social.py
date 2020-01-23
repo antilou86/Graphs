@@ -51,6 +51,7 @@ class SocialGraph:
         while self.last_id <= num_users:
         # Add users, user name will essentially be the user_id
             self.add_user(self.last_id)
+
         # Create friendships
         #for each user
         for user in self.users:
